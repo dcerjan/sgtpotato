@@ -24,13 +24,14 @@ func process_input(delta):
 	if Input.get_joy_axis(0, JOY_ANALOG_R2) > 0.1:
 		charged += Input.get_joy_axis(0, JOY_ANALOG_R2) * delta
 
-	if (charged > 1.0 / rate_of_fire):
-		charged = 0.0
+	while (charged > 1.0 / rate_of_fire):
+		charged -= (1.0 / rate_of_fire)
 		var root = get_node('/root/')
-		var bullet = load('res://bullet.tscn').instance()
+		var bullet = load('res://data/composite/projectiles/bullet.tscn').instance()
 		bullet.init(
 			get_node('action_point').global_position,
-			get_parent().linear_velocity + Vector2(cos(global_rotation), sin(global_rotation)) * 100
+			get_parent().linear_velocity + Vector2(cos(global_rotation), sin(global_rotation)) * 150,
+			1.5
 		)
 		root.add_child(bullet)
 

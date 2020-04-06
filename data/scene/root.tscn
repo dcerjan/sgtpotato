@@ -1,0 +1,229 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://data/script/turret.gd" type="Script" id=1]
+[ext_resource path="res://data/script/follow_player.gd" type="Script" id=2]
+[ext_resource path="res://data/script/player.gd" type="Script" id=3]
+[ext_resource path="res://data/image/turret.png" type="Texture" id=4]
+[ext_resource path="res://data/image/tank.png" type="Texture" id=5]
+[ext_resource path="res://data/image/wall.png" type="Texture" id=6]
+
+[sub_resource type="PhysicsMaterial" id=1]
+friction = 0.1
+rough = true
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8.18687, 8.06337 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 6.0929, 5.06754 )
+
+[node name="scene" type="Node2D"]
+position = Vector2( 16, 0 )
+
+[node name="follow_player" type="Node2D" parent="."]
+position = Vector2( -15.9525, -0.0446434 )
+script = ExtResource( 2 )
+springiness = 0.952
+
+[node name="root_cam" type="Camera2D" parent="follow_player"]
+current = true
+zoom = Vector2( 0.25, 0.25 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="walls" type="Node2D" parent="."]
+
+[node name="wall" type="RigidBody2D" parent="walls"]
+position = Vector2( 40, -8 )
+mass = 3.0
+physics_material_override = SubResource( 1 )
+gravity_scale = 0.0
+linear_damp = 0.9
+angular_damp = 0.9
+
+[node name="Sprite" type="Sprite" parent="walls/wall"]
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall"]
+visible = false
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="wall2" type="RigidBody2D" parent="walls"]
+position = Vector2( 48, 8 )
+physics_material_override = SubResource( 1 )
+gravity_scale = 0.0
+linear_damp = 0.9
+angular_damp = 0.9
+
+[node name="Sprite" type="Sprite" parent="walls/wall2"]
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall2"]
+visible = false
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="wall3" type="RigidBody2D" parent="walls"]
+position = Vector2( 40, 24 )
+physics_material_override = SubResource( 1 )
+gravity_scale = 0.0
+linear_damp = 0.9
+angular_damp = 0.9
+
+[node name="Sprite" type="Sprite" parent="walls/wall3"]
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall3"]
+visible = false
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="wall4" type="RigidBody2D" parent="walls"]
+position = Vector2( 56, -8 )
+physics_material_override = SubResource( 1 )
+gravity_scale = 0.0
+linear_damp = 0.9
+angular_damp = 0.9
+
+[node name="Sprite" type="Sprite" parent="walls/wall4"]
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall4"]
+visible = false
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="wall5" type="RigidBody2D" parent="walls"]
+position = Vector2( 56, 24 )
+physics_material_override = SubResource( 1 )
+gravity_scale = 0.0
+linear_damp = 0.9
+angular_damp = 0.9
+
+[node name="Sprite" type="Sprite" parent="walls/wall5"]
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall5"]
+visible = false
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="wall6" type="RigidBody2D" parent="walls"]
+position = Vector2( 64, 8 )
+physics_material_override = SubResource( 1 )
+gravity_scale = 0.0
+linear_damp = 0.9
+angular_damp = 0.9
+
+[node name="Sprite" type="Sprite" parent="walls/wall6"]
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall6"]
+visible = false
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="wall7" type="RigidBody2D" parent="walls"]
+position = Vector2( 72, 24 )
+physics_material_override = SubResource( 1 )
+gravity_scale = 0.0
+linear_damp = 0.9
+angular_damp = 0.9
+
+[node name="Sprite" type="Sprite" parent="walls/wall7"]
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall7"]
+visible = false
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="wall8" type="RigidBody2D" parent="walls"]
+position = Vector2( 72, -8 )
+physics_material_override = SubResource( 1 )
+gravity_scale = 0.0
+linear_damp = 0.9
+angular_damp = 0.9
+
+[node name="Sprite" type="Sprite" parent="walls/wall8"]
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/wall8"]
+visible = false
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="player" type="RigidBody2D" parent="."]
+mass = 10.0
+gravity_scale = 0.0
+linear_damp = 1.1
+angular_damp = 1.1
+script = ExtResource( 3 )
+speed = 2.0
+turning_speed = 3.0
+
+[node name="Sprite" type="Sprite" parent="player"]
+texture = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+shape = SubResource( 3 )
+
+[node name="turret" type="Node2D" parent="player"]
+position = Vector2( -2, 0 )
+script = ExtResource( 1 )
+rate_of_fire = 100
+align_speed = 5.0
+
+[node name="Sprite" type="Sprite" parent="player/turret"]
+position = Vector2( 4, 0 )
+texture = ExtResource( 4 )
+
+[node name="action_point" type="Node2D" parent="player/turret"]
+position = Vector2( 12, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="scene_init_controller" type="Node2D" parent="."]

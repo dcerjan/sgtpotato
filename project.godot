@@ -16,8 +16,8 @@ _global_script_class_icons={
 [application]
 
 config/name="SgtPotato"
-run/main_scene="res://root.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://data/scene/root.tscn"
+config/icon="res://data/image/icon.png"
 
 [input]
 
@@ -52,4 +52,5 @@ MoveDown={
 
 [rendering]
 
+quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"

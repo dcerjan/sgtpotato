@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/turret.png-255e061319931a3af2d9e5084bce1f37.stex"
+path="res://.import/flame.png-310c3e302090334beee8be10e3aaf05f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://turret.png"
-dest_files=[ "res://.import/turret.png-255e061319931a3af2d9e5084bce1f37.stex" ]
+source_file="res://data/image/flame.png"
+dest_files=[ "res://.import/flame.png-310c3e302090334beee8be10e3aaf05f.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=false
-flags/mipmaps=false
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

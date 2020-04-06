@@ -9,6 +9,7 @@ var target_velocity = Vector2.ZERO
 func get_input():
 	var x = Input.get_joy_axis(0, JOY_ANALOG_LX)
 	var y = Input.get_joy_axis(0, JOY_ANALOG_LY)
+
 	
 	var thumb = Vector2(x, y)
 	
