@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://data/script/turret.gd" type="Script" id=1]
 [ext_resource path="res://data/script/follow_player.gd" type="Script" id=2]
@@ -6,6 +6,12 @@
 [ext_resource path="res://data/image/turret.png" type="Texture" id=4]
 [ext_resource path="res://data/image/tank.png" type="Texture" id=5]
 [ext_resource path="res://data/image/wall.png" type="Texture" id=6]
+[ext_resource path="res://data/scene/player_fuel_gauge.gd" type="Script" id=7]
+[ext_resource path="res://data/image/heal_particle.png" type="Texture" id=8]
+[ext_resource path="res://data/image/healing_pad.png" type="Texture" id=9]
+[ext_resource path="res://data/composite/aspects/FuelAspect.tscn" type="PackedScene" id=10]
+[ext_resource path="res://data/composite/aspects/HealthAspect.tscn" type="PackedScene" id=11]
+[ext_resource path="res://data/scene/health.gd" type="Script" id=12]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.1
@@ -17,19 +23,67 @@ extents = Vector2( 8.18687, 8.06337 )
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 6.0929, 5.06754 )
 
+[sub_resource type="CanvasItemMaterial" id=4]
+
+[sub_resource type="CanvasItemMaterial" id=5]
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0, 0.278146, 0.701987, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 13.0986, 13.0185 )
+
 [node name="scene" type="Node2D"]
 position = Vector2( 16, 0 )
 
 [node name="follow_player" type="Node2D" parent="."]
 position = Vector2( -15.9525, -0.0446434 )
 script = ExtResource( 2 )
-springiness = 0.952
+springiness = 0.5
 
 [node name="root_cam" type="Camera2D" parent="follow_player"]
 current = true
 zoom = Vector2( 0.25, 0.25 )
 __meta__ = {
 "_edit_lock_": true
+}
+
+[node name="gui" type="Node2D" parent="follow_player/root_cam"]
+position = Vector2( 15.9525, 0.0446434 )
+
+[node name="health" type="ColorRect" parent="follow_player/root_cam/gui"]
+margin_left = -144.0
+margin_top = -72.0
+margin_right = -96.0
+margin_bottom = -70.0
+color = Color( 0.458824, 1, 0.152941, 1 )
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+target = NodePath("../../../../player")
+
+[node name="fuel" type="ColorRect" parent="follow_player/root_cam/gui"]
+margin_left = -144.0
+margin_top = -69.0
+margin_right = -96.0
+margin_bottom = -67.0
+color = Color( 0.137255, 0.435294, 1, 1 )
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+target = NodePath("../../../../player")
+
+[node name="ammo" type="ColorRect" parent="follow_player/root_cam/gui"]
+margin_left = -144.0
+margin_top = -66.0
+margin_right = -96.0
+margin_bottom = -64.0
+color = Color( 0.662745, 0.662745, 0.662745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
 }
 
 [node name="walls" type="Node2D" parent="."]
@@ -196,6 +250,7 @@ __meta__ = {
 }
 
 [node name="player" type="RigidBody2D" parent="."]
+z_index = 1
 mass = 10.0
 gravity_scale = 0.0
 linear_damp = 1.1
@@ -203,6 +258,11 @@ angular_damp = 1.1
 script = ExtResource( 3 )
 speed = 2.0
 turning_speed = 3.0
+
+[node name="FuelAspect" parent="player" instance=ExtResource( 10 )]
+
+[node name="HealthAspect" parent="player" instance=ExtResource( 11 )]
+current_health = 20.0
 
 [node name="Sprite" type="Sprite" parent="player"]
 texture = ExtResource( 5 )
@@ -227,3 +287,40 @@ __meta__ = {
 }
 
 [node name="scene_init_controller" type="Node2D" parent="."]
+
+[node name="trigger" type="Node2D" parent="."]
+
+[node name="healing_pad" type="Area2D" parent="trigger"]
+material = SubResource( 4 )
+position = Vector2( -80, -24 )
+
+[node name="Sprite" type="Sprite" parent="trigger/healing_pad"]
+texture = ExtResource( 9 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Particles2D" type="CPUParticles2D" parent="trigger/healing_pad"]
+material = SubResource( 5 )
+position = Vector2( -0.211975, 0 )
+z_index = 2
+amount = 4
+texture = ExtResource( 8 )
+emission_shape = 2
+emission_rect_extents = Vector2( 10, 10 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 1.0
+linear_accel = 10.0
+damping = 1.15
+damping_random = 0.31
+color_ramp = SubResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="trigger/healing_pad"]
+shape = SubResource( 7 )
+__meta__ = {
+"_edit_lock_": true
+}

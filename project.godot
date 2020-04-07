@@ -8,9 +8,26 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "FuelAspect",
+"language": "GDScript",
+"path": "res://data/script/Aspect/FuelAspect.gd"
+}, {
+"base": "Node2D",
+"class": "HealthAspect",
+"language": "GDScript",
+"path": "res://data/script/Aspect/HealthAspect.gd"
+}, {
+"base": "Reference",
+"class": "TankState",
+"language": "GDScript",
+"path": "res://data/script/State/TankState.gd"
+} ]
 _global_script_class_icons={
-
+"FuelAspect": "",
+"HealthAspect": "",
+"TankState": ""
 }
 
 [application]
@@ -52,5 +69,4 @@ MoveDown={
 
 [rendering]
 
-quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"

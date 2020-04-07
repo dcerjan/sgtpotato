@@ -8,6 +8,7 @@ var bullets = []
 var charged = 0.0
 var direction = Vector2(1, 0)
 var thumb_moved = false
+var last_global_rotation = 0
 
 func process_input(delta):
 	var x = Input.get_joy_axis(0, JOY_ANALOG_RX)
@@ -39,6 +40,9 @@ func _process(delta):
 	process_input(delta)
 	if (thumb_moved):
 		global_rotation = lerp_angle(global_rotation, direction.angle(), align_speed * delta)
+		last_global_rotation = global_rotation
+	else:
+		global_rotation = last_global_rotation
 
 
 
