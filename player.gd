@@ -17,6 +17,21 @@ func get_input():
 	else:
 		target_velocity = Vector2.ZERO
 
+func play_motor(velocity):
+	var vol = velocity.length()
+	if vol <= 0:
+		$EngineSfx.stop()
+		return
+	if vol > 3.0:
+		vol = 3.0
+	vol = vol / 3
+	if !$EngineSfx.is_playing():
+		$EngineSfx.play()
+	var pitch = 0.8 + target_velocity.length()*2
+	var voldb = (1-vol)*-80
+	$EngineSfx.pitch_scale = pitch
+	$EngineSfx.volume_db = voldb
+
 func _physics_process(delta):
 	get_input()
 	if target_velocity.length() > 0.01:
@@ -27,4 +42,5 @@ func _physics_process(delta):
 	else:
 		set_applied_torque(0)
 		set_applied_force(Vector2.ZERO)
+	play_motor(self.linear_velocity)
 

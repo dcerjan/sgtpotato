@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://player.gd" type="Script" id=1]
 [ext_resource path="res://wall.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://tank.png" type="Texture" id=4]
 [ext_resource path="res://turret.png" type="Texture" id=5]
 [ext_resource path="res://turret.gd" type="Script" id=6]
+[ext_resource path="res://Sound/Motor_Sound2.wav" type="AudioStream" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6.0929, 5.06754 )
@@ -59,6 +60,10 @@ position = Vector2( 11, 0 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="EngineSfx" type="AudioStreamPlayer" parent="player"]
+stream = ExtResource( 7 )
+bus = "Player"
 
 [node name="walls" type="Node2D" parent="."]
 

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Cannon.wav-c6b7432a3247b6cdd73a2d00c1f927f1.sample"
+
+[deps]
+
+source_file="res://Sound/Cannon.wav"
+dest_files=[ "res://.import/Cannon.wav-c6b7432a3247b6cdd73a2d00c1f927f1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
