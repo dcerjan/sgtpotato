@@ -8,16 +8,33 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "FuelAspect",
+"language": "GDScript",
+"path": "res://data/script/Aspect/FuelAspect.gd"
+}, {
+"base": "Node2D",
+"class": "HealthAspect",
+"language": "GDScript",
+"path": "res://data/script/Aspect/HealthAspect.gd"
+}, {
+"base": "Reference",
+"class": "TankState",
+"language": "GDScript",
+"path": "res://data/script/State/TankState.gd"
+} ]
 _global_script_class_icons={
-
+"FuelAspect": "",
+"HealthAspect": "",
+"TankState": ""
 }
 
 [application]
 
 config/name="SgtPotato"
-run/main_scene="res://root.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://data/scene/root.tscn"
+config/icon="res://data/image/icon.png"
 
 [input]
 
