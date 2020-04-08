@@ -11,7 +11,6 @@ func init(position, velocity, age = 1.0):
 	global_rotation = velocity.angle() + (randf() - 0.5) * 36
 	set_linear_velocity(velocity)
 	
-
 func _ready():
 	var sprite = get_node('Sprite')
 	sprite.scale = initial_scale

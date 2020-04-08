@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/Cannon.wav-c6b7432a3247b6cdd73a2d00c1f927f1.sample"
+path="res://.import/Cannon.wav-e0a737265c06b4c15044be1d7618694d.sample"
 
 [deps]
 
-source_file="res://Sound/Cannon.wav"
-dest_files=[ "res://.import/Cannon.wav-c6b7432a3247b6cdd73a2d00c1f927f1.sample" ]
+source_file="res://data/sound/Cannon.wav"
+dest_files=[ "res://.import/Cannon.wav-e0a737265c06b4c15044be1d7618694d.sample" ]
 
 [params]
 
