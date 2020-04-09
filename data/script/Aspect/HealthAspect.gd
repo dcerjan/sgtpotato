@@ -8,14 +8,17 @@ export (float) var current_health = 100.0
 func health_percentage():
 	return max(self.current_health / self.max_health, 0.0)
 
+func is_full():
+	return self.current_health >= self.max_health
+
 func is_alive():
 	return self.current_health > 0
 
-func is_deat():
+func is_death():
 	return self.current_health <= 0
 
-func take_damage(amount: float):
+func damage(amount: float):
 	self.current_health = max(self.current_health - amount, 0.0)
 
-func heal_damage(amount: float):
+func heal(amount: float):
 	self.current_health = min(self.current_health + amount, self.max_health)
