@@ -8,6 +8,6 @@ func _ready():
   player = get_node('/root/scene/player')
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
   var toPlayer = (player.position - position) * delta * springiness
   set_position(position + toPlayer)
