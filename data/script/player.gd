@@ -10,35 +10,35 @@ var fuel_aspect: FuelAspect = null
 var health_aspect: HealthAspect = null
 
 func _ready():
-	self.fuel_aspect = self.get_node("FuelAspect")
-	self.health_aspect = self.get_node("HealthAspect")
+  self.fuel_aspect = self.get_node("FuelAspect")
+  self.health_aspect = self.get_node("HealthAspect")
 
 func get_input():
-	if fuel_aspect.is_empty():
-		target_velocity = Vector2.ZERO
-		return
+  if fuel_aspect.is_empty():
+    target_velocity = Vector2.ZERO
+    return
 
-	var x = Input.get_joy_axis(0, JOY_ANALOG_LX)
-	var y = Input.get_joy_axis(0, JOY_ANALOG_LY)
+  var x = Input.get_joy_axis(0, JOY_ANALOG_LX)
+  var y = Input.get_joy_axis(0, JOY_ANALOG_LY)
 
-	var thumb = Vector2(x, y)
-	
-	if thumb.length() > deadzone:
-		target_velocity = Vector2(x, y)
-	else:
-		target_velocity = Vector2.ZERO
+  var thumb = Vector2(x, y)
+  
+  if thumb.length() > deadzone:
+    target_velocity = Vector2(x, y)
+  else:
+    target_velocity = Vector2.ZERO
 
 func _physics_process(delta):
-	get_input()
-	if target_velocity.length() > 0.01:
-		var global_direction = Vector2(cos(global_rotation), sin(global_rotation))
-		var torque_to_apply = global_direction.angle_to(target_velocity)
-		set_applied_torque(torque_to_apply * 1000 * mass * turning_speed * delta)
-		set_applied_force(global_direction * 1000 * mass * speed * delta)
-		fuel_aspect.consume_fuel(delta)
-	else:
-		set_applied_torque(0)
-		set_applied_force(Vector2.ZERO)
+  get_input()
+  if target_velocity.length() > 0.01:
+    var global_direction = Vector2(cos(global_rotation), sin(global_rotation))
+    var torque_to_apply = global_direction.angle_to(target_velocity)
+    set_applied_torque(torque_to_apply * 1000 * mass * turning_speed * delta)
+    set_applied_force(global_direction * 1000 * mass * speed * delta)
+    fuel_aspect.consume_fuel(delta)
+  else:
+    set_applied_torque(0)
+    set_applied_force(Vector2.ZERO)
 
 func _on_healing_pad_body_entered(node: Object):
-	print (node)
+  print (node)
