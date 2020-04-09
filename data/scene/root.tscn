@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://data/script/turret.gd" type="Script" id=1]
 [ext_resource path="res://data/script/follow_player.gd" type="Script" id=2]
@@ -7,8 +7,7 @@
 [ext_resource path="res://data/image/tank.png" type="Texture" id=5]
 [ext_resource path="res://data/image/wall.png" type="Texture" id=6]
 [ext_resource path="res://data/scene/player_fuel_gauge.gd" type="Script" id=7]
-[ext_resource path="res://data/image/heal_particle.png" type="Texture" id=8]
-[ext_resource path="res://data/image/healing_pad.png" type="Texture" id=9]
+[ext_resource path="res://data/composite/objects/healing_pad.tscn" type="PackedScene" id=8]
 [ext_resource path="res://data/composite/aspects/FuelAspect.tscn" type="PackedScene" id=10]
 [ext_resource path="res://data/composite/aspects/HealthAspect.tscn" type="PackedScene" id=11]
 [ext_resource path="res://data/scene/health.gd" type="Script" id=12]
@@ -24,17 +23,6 @@ extents = Vector2( 8.18687, 8.06337 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 6.0929, 5.06754 )
-
-[sub_resource type="CanvasItemMaterial" id=4]
-
-[sub_resource type="CanvasItemMaterial" id=5]
-
-[sub_resource type="Gradient" id=6]
-offsets = PoolRealArray( 0, 0.278146, 0.701987, 1 )
-colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
-
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 13.0986, 13.0185 )
 
 [node name="scene" type="Node2D"]
 position = Vector2( 16, 0 )
@@ -302,37 +290,8 @@ bus = "Player"
 
 [node name="trigger" type="Node2D" parent="."]
 
-[node name="healing_pad" type="Area2D" parent="trigger"]
-material = SubResource( 4 )
-position = Vector2( -80, -24 )
-
-[node name="Sprite" type="Sprite" parent="trigger/healing_pad"]
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Particles2D" type="CPUParticles2D" parent="trigger/healing_pad"]
-material = SubResource( 5 )
-position = Vector2( -0.211975, 0 )
-z_index = 2
-amount = 4
-texture = ExtResource( 8 )
-emission_shape = 2
-emission_rect_extents = Vector2( 10, 10 )
-spread = 180.0
-gravity = Vector2( 0, 0 )
-initial_velocity = 1.0
-linear_accel = 10.0
-damping = 1.15
-damping_random = 0.31
-color_ramp = SubResource( 6 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="trigger/healing_pad"]
-shape = SubResource( 7 )
-__meta__ = {
-"_edit_lock_": true
-}
+[node name="healing_pad" parent="trigger" instance=ExtResource( 8 )]
+position = Vector2( -64, -24 )
+energy_max = 40.0
+initial_energy = 1.0
+healing_rate = 20.0
