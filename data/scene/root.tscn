@@ -293,5 +293,4 @@ bus = "Player"
 [node name="healing_pad" parent="trigger" instance=ExtResource( 8 )]
 position = Vector2( -64, -24 )
 energy_max = 40.0
-initial_energy = 1.0
 healing_rate = 20.0
