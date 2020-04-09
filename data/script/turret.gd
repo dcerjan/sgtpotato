@@ -26,6 +26,8 @@ func process_input(delta):
     charged += Input.get_joy_axis(0, JOY_ANALOG_R2) * delta
 
   while (charged > 1.0 / rate_of_fire):
+    if !$CannonSfx.playing:
+	  $CannonSfx.play()
     charged -= (1.0 / rate_of_fire)
     var root = get_node('/root/')
     var bullet = load('res://data/composite/projectiles/bullet.tscn').instance()

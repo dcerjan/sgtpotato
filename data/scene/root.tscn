@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://data/script/turret.gd" type="Script" id=1]
 [ext_resource path="res://data/script/follow_player.gd" type="Script" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://data/composite/aspects/FuelAspect.tscn" type="PackedScene" id=10]
 [ext_resource path="res://data/composite/aspects/HealthAspect.tscn" type="PackedScene" id=11]
 [ext_resource path="res://data/scene/health.gd" type="Script" id=12]
+[ext_resource path="res://data/sound/Motor_Sound2.wav" type="AudioStream" id=13]
+[ext_resource path="res://data/sound/Cannon.wav" type="AudioStream" id=14]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.1
@@ -273,6 +275,16 @@ position = Vector2( 12, 0 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="CannonSfx" type="AudioStreamPlayer" parent="player/turret"]
+stream = ExtResource( 14 )
+volume_db = -10.0
+pitch_scale = 0.8
+bus = "FxReverb"
+
+[node name="EngineSfx" type="AudioStreamPlayer" parent="player"]
+stream = ExtResource( 13 )
+bus = "Player"
 
 [node name="scene_init_controller" type="Node2D" parent="."]
 
