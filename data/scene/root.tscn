@@ -252,6 +252,7 @@ turning_speed = 3.0
 [node name="FuelAspect" parent="player" instance=ExtResource( 10 )]
 
 [node name="HealthAspect" parent="player" instance=ExtResource( 11 )]
+max_health = 1000.0
 current_health = 20.0
 
 [node name="Sprite" type="Sprite" parent="player"]
@@ -294,3 +295,4 @@ bus = "Player"
 position = Vector2( -64, -24 )
 energy_max = 40.0
 healing_rate = 20.0
+debug = true

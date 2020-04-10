@@ -14,10 +14,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/script/Aspect/FuelAspect.gd"
 }, {
+"base": "Area2D",
+"class": "HealingPad",
+"language": "GDScript",
+"path": "res://data/composite/objects/healing_pad.gd"
+}, {
 "base": "Node2D",
 "class": "HealthAspect",
 "language": "GDScript",
 "path": "res://data/script/Aspect/HealthAspect.gd"
+}, {
+"base": "Reference",
+"class": "State",
+"language": "GDScript",
+"path": "res://data/script/Lib/State.gd"
 }, {
 "base": "Reference",
 "class": "TankState",
@@ -26,7 +36,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "FuelAspect": "",
+"HealingPad": "",
 "HealthAspect": "",
+"State": "",
 "TankState": ""
 }
 
