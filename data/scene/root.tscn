@@ -35,13 +35,12 @@ springiness = 0.5
 
 [node name="root_cam" type="Camera2D" parent="follow_player"]
 current = true
-zoom = Vector2( 0.25, 0.25 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="gui" type="Node2D" parent="follow_player/root_cam"]
-position = Vector2( 15.9525, 0.0446434 )
+position = Vector2( -16.0475, -15.9554 )
 z_index = 10
 z_as_relative = false
 
