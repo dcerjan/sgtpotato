@@ -10,8 +10,8 @@ var fuel_aspect: FuelAspect = null
 var health_aspect: HealthAspect = null
 
 func _ready():
-  self.fuel_aspect = self.get_node("FuelAspect")
-  self.health_aspect = self.get_node("HealthAspect")
+  fuel_aspect = get_node("FuelAspect")
+  health_aspect = get_node("HealthAspect")
 
 func get_input():
   if fuel_aspect.is_empty():
@@ -29,17 +29,14 @@ func get_input():
     target_velocity = Vector2.ZERO
 
 func play_motor(velocity):
-  var vol = velocity.length()
-  if vol <= 0:
-    $EngineSfx.stop()
-    return
-  if vol > 3.0:
-    vol = 3.0
-  vol = vol / 3
-  if !$EngineSfx.is_playing():
+  var vol = clamp(velocity.length(), 1.0, 5.0) / 5.0
+#  if vol <= 0:
+#    $EngineSfx.stop()
+#    return
+  if not $EngineSfx.is_playing():
     $EngineSfx.play()
-  var pitch = 0.8 + target_velocity.length()*2
-  var voldb = (1-vol)*-80
+  var pitch = 0.7 + target_velocity.length() * 0.2
+  var voldb = vol * 0.5
   $EngineSfx.pitch_scale = pitch
   $EngineSfx.volume_db = voldb
 

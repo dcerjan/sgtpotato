@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://data/script/turret.gd" type="Script" id=1]
 [ext_resource path="res://data/script/follow_player.gd" type="Script" id=2]
@@ -7,7 +7,8 @@
 [ext_resource path="res://data/image/tank.png" type="Texture" id=5]
 [ext_resource path="res://data/image/wall.png" type="Texture" id=6]
 [ext_resource path="res://data/scene/player_fuel_gauge.gd" type="Script" id=7]
-[ext_resource path="res://data/composite/objects/healing_pad.tscn" type="PackedScene" id=8]
+[ext_resource path="res://data/composite/objects/HealingPad.tscn" type="PackedScene" id=8]
+[ext_resource path="res://data/composite/objects/RefuelingPad.tscn" type="PackedScene" id=9]
 [ext_resource path="res://data/composite/aspects/FuelAspect.tscn" type="PackedScene" id=10]
 [ext_resource path="res://data/composite/aspects/HealthAspect.tscn" type="PackedScene" id=11]
 [ext_resource path="res://data/scene/health.gd" type="Script" id=12]
@@ -250,16 +251,20 @@ speed = 2.0
 turning_speed = 3.0
 
 [node name="FuelAspect" parent="player" instance=ExtResource( 10 )]
+fuel_consumption = 4.0
 
 [node name="HealthAspect" parent="player" instance=ExtResource( 11 )]
-max_health = 1000.0
-current_health = 20.0
+current_value = 10.0
 
 [node name="Sprite" type="Sprite" parent="player"]
 texture = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
 shape = SubResource( 3 )
+
+[node name="EngineSfx" type="AudioStreamPlayer" parent="player"]
+stream = ExtResource( 13 )
+bus = "Player"
 
 [node name="turret" type="Node2D" parent="player"]
 position = Vector2( -2, 0 )
@@ -283,16 +288,14 @@ volume_db = -10.0
 pitch_scale = 0.8
 bus = "FxReverb"
 
-[node name="EngineSfx" type="AudioStreamPlayer" parent="player"]
-stream = ExtResource( 13 )
-bus = "Player"
-
 [node name="scene_init_controller" type="Node2D" parent="."]
 
 [node name="trigger" type="Node2D" parent="."]
 
-[node name="healing_pad" parent="trigger" instance=ExtResource( 8 )]
-position = Vector2( -64, -24 )
-energy_max = 40.0
-healing_rate = 20.0
+[node name="HealingPad" parent="trigger" instance=ExtResource( 8 )]
+position = Vector2( -56, -16 )
+debug = true
+
+[node name="RefuelingPad" parent="trigger" instance=ExtResource( 9 )]
+position = Vector2( -56, 24 )
 debug = true

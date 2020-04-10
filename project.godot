@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
+"base": "ValueAspect",
 "class": "FuelAspect",
 "language": "GDScript",
 "path": "res://data/script/Aspect/FuelAspect.gd"
@@ -17,12 +17,17 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "HealingPad",
 "language": "GDScript",
-"path": "res://data/composite/objects/healing_pad.gd"
+"path": "res://data/composite/objects/HealingPad.gd"
 }, {
-"base": "Node2D",
+"base": "ValueAspect",
 "class": "HealthAspect",
 "language": "GDScript",
 "path": "res://data/script/Aspect/HealthAspect.gd"
+}, {
+"base": "Area2D",
+"class": "RefuelingPad",
+"language": "GDScript",
+"path": "res://data/composite/objects/RefuelingPad.gd"
 }, {
 "base": "Reference",
 "class": "State",
@@ -33,13 +38,20 @@ _global_script_classes=[ {
 "class": "TankState",
 "language": "GDScript",
 "path": "res://data/script/State/TankState.gd"
+}, {
+"base": "Node2D",
+"class": "ValueAspect",
+"language": "GDScript",
+"path": "res://data/script/Lib/ValueAspect.gd"
 } ]
 _global_script_class_icons={
 "FuelAspect": "",
 "HealingPad": "",
 "HealthAspect": "",
+"RefuelingPad": "",
 "State": "",
-"TankState": ""
+"TankState": "",
+"ValueAspect": ""
 }
 
 [application]
