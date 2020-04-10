@@ -24,18 +24,18 @@ orbit_velocity_random = 0.0
 radial_accel = -6.0
 color_ramp = SubResource( 3 )
 
-[sub_resource type="CanvasItemMaterial" id=7]
+[sub_resource type="CanvasItemMaterial" id=5]
 blend_mode = 1
 
-[sub_resource type="Curve" id=8]
+[sub_resource type="Curve" id=6]
 _data = [ Vector2( 0, 0.215517 ), 0.0, 0.0, 0, 0, Vector2( 0.133047, 0.663793 ), 1.68907, 1.68907, 0, 0, Vector2( 0.39485, 0.465517 ), -1.2842, -1.2842, 0, 0, Vector2( 1, 0.137931 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Gradient" id=9]
+[sub_resource type="Gradient" id=7]
 offsets = PoolRealArray( 0, 0.161458, 0.244792, 0.645833, 1 )
 colors = PoolColorArray( 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=10]
-gradient = SubResource( 9 )
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
 width = 16
 
 [node name="ChargeTurret" type="Node2D"]
@@ -55,12 +55,12 @@ visibility_rect = Rect2( -10, -10, 20, 20 )
 process_material = SubResource( 4 )
 
 [node name="Beam" type="Line2D" parent="Turret"]
-material = SubResource( 7 )
+material = SubResource( 5 )
 position = Vector2( 10, 0 )
 points = PoolVector2Array( 7, 0, 16, -3, 23, -1, 29, 3, 36, -1, 40, -1 )
-width_curve = SubResource( 8 )
+width_curve = SubResource( 6 )
 default_color = Color( 1, 1, 1, 1 )
-texture = SubResource( 10 )
+texture = SubResource( 8 )
 texture_mode = 2
 
 [node name="Control" type="Control" parent="."]
