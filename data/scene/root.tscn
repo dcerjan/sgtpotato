@@ -42,6 +42,8 @@ __meta__ = {
 
 [node name="gui" type="Node2D" parent="follow_player/root_cam"]
 position = Vector2( 15.9525, 0.0446434 )
+z_index = 10
+z_as_relative = false
 
 [node name="health" type="ColorRect" parent="follow_player/root_cam/gui"]
 margin_left = -144.0

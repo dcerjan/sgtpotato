@@ -29,10 +29,7 @@ func get_input():
     target_velocity = Vector2.ZERO
 
 func play_motor(velocity):
-  var vol = clamp(velocity.length(), 1.0, 5.0) / 5.0
-#  if vol <= 0:
-#    $EngineSfx.stop()
-#    return
+  var vol = clamp(velocity.length(), 1.0, 3.0) / 3.0
   if not $EngineSfx.is_playing():
     $EngineSfx.play()
   var pitch = 0.7 + target_velocity.length() * 0.2
