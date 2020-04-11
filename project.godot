@@ -9,7 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "ValueAspect",
+"base": "Node2D",
+"class": "BoundFloatValueAspect",
+"language": "GDScript",
+"path": "res://data/script/Lib/BoundFloatValueAspect.gd"
+}, {
+"base": "BoundFloatValueAspect",
 "class": "FuelAspect",
 "language": "GDScript",
 "path": "res://data/script/Aspect/FuelAspect.gd"
@@ -19,7 +24,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/composite/objects/HealingPad.gd"
 }, {
-"base": "ValueAspect",
+"base": "BoundFloatValueAspect",
 "class": "HealthAspect",
 "language": "GDScript",
 "path": "res://data/script/Aspect/HealthAspect.gd"
@@ -38,20 +43,15 @@ _global_script_classes=[ {
 "class": "TankState",
 "language": "GDScript",
 "path": "res://data/script/State/TankState.gd"
-}, {
-"base": "Node2D",
-"class": "ValueAspect",
-"language": "GDScript",
-"path": "res://data/script/Lib/ValueAspect.gd"
 } ]
 _global_script_class_icons={
+"BoundFloatValueAspect": "",
 "FuelAspect": "",
 "HealingPad": "",
 "HealthAspect": "",
 "RefuelingPad": "",
 "State": "",
-"TankState": "",
-"ValueAspect": ""
+"TankState": ""
 }
 
 [application]
@@ -62,12 +62,12 @@ config/icon="res://data/image/icon.png"
 
 [display]
 
-window/size/width=320
-window/size/height=180
+window/size/width=640
+window/size/height=360
 window/size/resizable=false
 window/size/test_width=1280
 window/size/test_height=720
-window/stretch/mode="2d"
+window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
 [input]
@@ -100,8 +100,15 @@ MoveDown={
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":1.0,"script":null)
  ]
 }
+toggle_fullscreen={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777254,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [rendering]
 
-quality/filters/msaa=2
+quality/filters/anisotropic_filter_level=16
+quality/filters/use_nearest_mipmap_filter=true
+quality/filters/msaa=4
 environment/default_environment="res://default_env.tres"

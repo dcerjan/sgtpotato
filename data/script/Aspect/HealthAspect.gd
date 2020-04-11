@@ -1,3 +1,4 @@
-extends ValueAspect
+extends BoundFloatValueAspect
 
 class_name HealthAspect
+

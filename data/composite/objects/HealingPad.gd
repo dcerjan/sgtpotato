@@ -12,7 +12,7 @@ class ActiveState extends State:
       state.current_energy = min(state.current_energy + delta * state.energy_regen, state.energy_max)
     var should_switch_state = false
     for body in bodies:
-      if body.has_node('HealthAspect') && not body.get_node('HealthAspect').is_max():
+      if body.has_node('HealthAspect') and not body.get_node('HealthAspect').is_max():
         should_switch_state = true
         break
     if should_switch_state:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://data/script/turret.gd" type="Script" id=1]
 [ext_resource path="res://data/script/follow_player.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://data/scene/health.gd" type="Script" id=12]
 [ext_resource path="res://data/sound/Motor_Sound2.wav" type="AudioStream" id=13]
 [ext_resource path="res://data/sound/Cannon.wav" type="AudioStream" id=14]
+[ext_resource path="res://data/scene/root.gd" type="Script" id=15]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.1
@@ -27,6 +28,7 @@ extents = Vector2( 6.0929, 5.06754 )
 
 [node name="scene" type="Node2D"]
 position = Vector2( 16, 0 )
+script = ExtResource( 15 )
 
 [node name="follow_player" type="Node2D" parent="."]
 position = Vector2( -15.9525, -0.0446434 )
@@ -35,20 +37,20 @@ springiness = 0.5
 
 [node name="root_cam" type="Camera2D" parent="follow_player"]
 current = true
+zoom = Vector2( 0.5, 0.5 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="gui" type="Node2D" parent="follow_player/root_cam"]
-position = Vector2( -16.0475, -15.9554 )
+position = Vector2( -160.048, -87.9554 )
 z_index = 10
 z_as_relative = false
 
 [node name="health" type="ColorRect" parent="follow_player/root_cam/gui"]
-margin_left = -144.0
-margin_top = -72.0
-margin_right = -96.0
-margin_bottom = -70.0
+margin_top = -7.62939e-06
+margin_right = 48.0
+margin_bottom = 1.99999
 color = Color( 0.458824, 1, 0.152941, 1 )
 script = ExtResource( 12 )
 __meta__ = {
@@ -57,10 +59,9 @@ __meta__ = {
 target = NodePath("../../../../player")
 
 [node name="fuel" type="ColorRect" parent="follow_player/root_cam/gui"]
-margin_left = -144.0
-margin_top = -69.0
-margin_right = -96.0
-margin_bottom = -67.0
+margin_top = 2.99999
+margin_right = 48.0
+margin_bottom = 4.99999
 color = Color( 0.137255, 0.435294, 1, 1 )
 script = ExtResource( 7 )
 __meta__ = {
@@ -69,10 +70,9 @@ __meta__ = {
 target = NodePath("../../../../player")
 
 [node name="ammo" type="ColorRect" parent="follow_player/root_cam/gui"]
-margin_left = -144.0
-margin_top = -66.0
-margin_right = -96.0
-margin_bottom = -64.0
+margin_top = 5.99999
+margin_right = 48.0
+margin_bottom = 7.99999
 color = Color( 0.662745, 0.662745, 0.662745, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -255,7 +255,7 @@ turning_speed = 3.0
 fuel_consumption = 4.0
 
 [node name="HealthAspect" parent="player" instance=ExtResource( 11 )]
-current_value = 10.0
+initial_value = 20.0
 
 [node name="Sprite" type="Sprite" parent="player"]
 texture = ExtResource( 5 )
