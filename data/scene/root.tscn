@@ -43,14 +43,14 @@ __meta__ = {
 }
 
 [node name="gui" type="Node2D" parent="follow_player/root_cam"]
-position = Vector2( -160.048, -87.9554 )
+position = Vector2( -79.0475, -43.9554 )
 z_index = 10
 z_as_relative = false
 
 [node name="health" type="ColorRect" parent="follow_player/root_cam/gui"]
-margin_top = -7.62939e-06
+margin_top = 3.8147e-06
 margin_right = 48.0
-margin_bottom = 1.99999
+margin_bottom = 2.0
 color = Color( 0.458824, 1, 0.152941, 1 )
 script = ExtResource( 12 )
 __meta__ = {
@@ -59,9 +59,9 @@ __meta__ = {
 target = NodePath("../../../../player")
 
 [node name="fuel" type="ColorRect" parent="follow_player/root_cam/gui"]
-margin_top = 2.99999
+margin_top = 3.0
 margin_right = 48.0
-margin_bottom = 4.99999
+margin_bottom = 5.0
 color = Color( 0.137255, 0.435294, 1, 1 )
 script = ExtResource( 7 )
 __meta__ = {
@@ -70,9 +70,9 @@ __meta__ = {
 target = NodePath("../../../../player")
 
 [node name="ammo" type="ColorRect" parent="follow_player/root_cam/gui"]
-margin_top = 5.99999
+margin_top = 6.0
 margin_right = 48.0
-margin_bottom = 7.99999
+margin_bottom = 8.0
 color = Color( 0.662745, 0.662745, 0.662745, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
