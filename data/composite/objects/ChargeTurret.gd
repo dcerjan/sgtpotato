@@ -7,6 +7,8 @@ onready var particles_beam_down = $Turret/BeamParticles/Down
 onready var particles_residue = $Turret/BeamParticles/Residue
 onready var beam = $Turret/Beams/Beam
 onready var crackle = $Turret/Beams/Crackle
+onready var ray = $Turret/RayCast2D
+onready var impact = $Impact
 
 onready var bar = $Control/Bg/Fg
 
@@ -37,8 +39,12 @@ var energy: float = 0.0
 var residue: float = 0.0
 
 func _ready() -> void:
+  # TODO: extract 100 into a range variable
+  ray.enabled = false
+  ray.set_cast_to(Vector2(100.0, 0.0))
   beam.clear_points()
   crackle.clear_points()
+  impact.stop()
   stop_spool_particles()
   stop_residue_particles()
 
@@ -111,20 +117,31 @@ func _process(delta):
       if not Input.is_mouse_button_pressed(BUTTON_LEFT):
         energy = 1.0
         __turret_state = TurretState.Firing
+        ray.enabled = true
         beam.add_point(Vector2(2.0, 0.0))
         beam.add_point(Vector2(100.0, 0.0))
         var samples = 20.0
         var step = 1.0 / samples
         for i in range(int(samples)):
-          print(4.0 + step * 80.0)
           crackle.add_point(Vector2(4.0 + i * step * 80.0, (0.5 - randf()) * 6.0))
 
     TurretState.Firing:
       energy = max(energy - delta, 0.0)
       beam.width = curve.interpolate(1.0 - energy)
       crackle.width = curve.interpolate(1.0 - energy) * 0.25
+      if ray.is_colliding():
+        print(ray.get_collision_point())
+        if not impact.playing:
+          impact.play()
+        impact.global_position = ray.get_collision_point()
+        impact.global_rotation = ray.get_collision_normal().angle()
+      else:
+        impact.stop()
+        
       if energy <= 0.0:
         __turret_state = TurretState.Discharging
+        impact.stop()
+        ray.enabled = false
         beam.clear_points()
         crackle.clear_points()
       if __residue_state == ResidueState.Stopped and energy <= 0.75:
