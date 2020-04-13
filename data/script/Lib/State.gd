@@ -10,7 +10,7 @@ func on_leave():
 
 func on_update(delta: float, state):
   pass
-  
+
 func transition_to(state: State):
   self.on_leave()
   state.on_enter()

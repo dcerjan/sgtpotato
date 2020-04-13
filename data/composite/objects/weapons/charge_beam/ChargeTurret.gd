@@ -12,10 +12,9 @@ onready var impact = $Impact
 
 onready var bar = $Control/Bg/Fg
 
-export (float) var charge_trheshold = 1.0
-export (int) var particle_rate = 30
-export (Curve) var curve = Curve.new()
-export (Curve) var after_curve = Curve.new()
+export (Curve) var beam_width_curve = Curve.new()
+export (Curve) var residue_curve = Curve.new()
+
 
 enum TurretState {
   Idle          = 0,
@@ -38,13 +37,16 @@ var charge: float = 0.0
 var energy: float = 0.0
 var residue: float = 0.0
 
-var samples = 20.0
+var beam_length = 200.0
+var samples = 40.0
 var step = 1.0 / samples
 
+var trigger_held = false
+var damage_per_secod = 1.0
+
 func _ready() -> void:
-  # TODO: extract 100 into a range variable
   ray.enabled = false
-  ray.set_cast_to(Vector2(100.0, 0.0))
+  ray.set_cast_to(Vector2(beam_length, 0.0))
   beam.clear_points()
   crackle.clear_points()
   impact.stop()
@@ -89,47 +91,43 @@ func modulate_residue_particles(alpha: float) -> void:
   particles_residue.self_modulate = Color(1.0, 1.0, 1.0, clamp(alpha, 0.0, 1.0))
 
 func _process(delta):
-  var mouse_pos = get_global_mouse_position()
-  var to_mouse = mouse_pos - turret.global_position
-  turret.global_rotation = to_mouse.angle()
-  
   match __turret_state:
     TurretState.Idle:
-      if Input.is_mouse_button_pressed(BUTTON_LEFT):
+      if trigger_held:
         __turret_state = TurretState.SpoolingUp
         play_spool_particles()
-        
+
     TurretState.SpoolingUp:
-      if Input.is_mouse_button_pressed(BUTTON_LEFT):
+      if trigger_held:
         charge = min(charge + delta, 1.0)
         if charge >= 1.0:
           __turret_state = TurretState.Charged
       else:
         __turret_state = TurretState.SpoolingDown
-        
+
     TurretState.SpoolingDown:
-      if Input.is_mouse_button_pressed(BUTTON_LEFT):
+      if trigger_held:
         __turret_state = TurretState.SpoolingUp
       else:
         charge = max(charge - delta, 0.0)
         if charge <= 0.0:
           __turret_state = TurretState.Idle
           stop_spool_particles()
-          
+
     TurretState.Charged:
-      if not Input.is_mouse_button_pressed(BUTTON_LEFT):
+      if not trigger_held:
         energy = 1.0
         __turret_state = TurretState.Firing
         ray.enabled = true
         beam.add_point(Vector2(2.0, 0.0))
-        beam.add_point(Vector2(100.0, 0.0))
+        beam.add_point(Vector2(beam_length, 0.0))
         for i in range(int(samples)):
-          crackle.add_point(Vector2(4.0 + i * step * 80.0, (0.5 - randf()) * 6.0))
+          crackle.add_point(Vector2(4.0 + i * step * beam_length * 0.8, (0.5 - randf()) * 6.0))
 
     TurretState.Firing:
-      energy = max(energy - delta, 0.0)
-      beam.width = curve.interpolate(1.0 - energy)
-      crackle.width = curve.interpolate(1.0 - energy) * 0.25
+      energy = max(energy - delta * 0.75, 0.0)
+      beam.width = beam_width_curve.interpolate(1.0 - energy)
+      crackle.width = beam_width_curve.interpolate(1.0 - energy) * 0.25
       if ray.is_colliding():
         if not impact.playing:
           impact.play()
@@ -140,12 +138,16 @@ func _process(delta):
         var end_len = end.length()
         for i in range(int(samples)):
           var y = crackle.get_point_position(i).y
-          crackle.set_point_position(i, Vector2(min(4.0 + i * step * 80.0, end_len), y))
+          crackle.set_point_position(i, Vector2(min(4.0 + i * step * beam_length * 0.8, end_len), y))
+        var body = ray.get_collider() as Node2D
+        if body.has_node('HealthAspect'):
+          var health_aspect: HealthAspect = body.get_node('HealthAspect')
+          health_aspect.subtract(damage_per_secod * delta)
       else:
-        beam.set_point_position(1, Vector2(100.0, 0.0))
+        beam.set_point_position(1, Vector2(beam_length, 0.0))
         for i in range(int(samples)):
           var y = crackle.get_point_position(i).y
-          crackle.set_point_position(i, Vector2(4.0 + i * step * 80.0, y))
+          crackle.set_point_position(i, Vector2(4.0 + i * step * beam_length * 0.8, y))
         impact.stop()
 
       if energy <= 0.0:
@@ -168,15 +170,21 @@ func _process(delta):
   match __residue_state:
     ResidueState.Playing:
       residue = max(residue - delta * 0.85, 0.0)
-      modulate_residue_particles(after_curve.interpolate(1.0 - residue))
+      modulate_residue_particles(residue_curve.interpolate(1.0 - residue))
       if residue <= 0.0:
         __residue_state = ResidueState.Stopped
         stop_residue_particles()
-    
+
     ResidueState.Stopped:
       pass
-  
+
   if __turret_state != TurretState.Idle:
-    modulate_spool_particles(charge / charge_trheshold)
-  
-  bar.rect_scale = Vector2(clamp(charge / charge_trheshold, 0.0, 1.0), 1.0)
+    modulate_spool_particles(charge)
+
+  # bar.rect_scale = Vector2(clamp(charge, 0.0, 1.0), 1.0)
+
+func hold_trigger() -> void:
+  trigger_held = true
+
+func release_trigger() -> void:
+  trigger_held = false

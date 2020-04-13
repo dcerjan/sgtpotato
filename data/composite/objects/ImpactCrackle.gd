@@ -35,7 +35,7 @@ func stop() -> void:
   playing = false
   for crackle in tentacles:
     crackle.visible = false
-  chunks.emitting = false 
+  chunks.emitting = false
 
 func play():
   playing = true

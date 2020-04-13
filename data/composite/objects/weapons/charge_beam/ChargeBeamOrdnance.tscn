@@ -1,0 +1,235 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://data/composite/objects/weapons/charge_beam/ChargeTurret.gd" type="Script" id=1]
+[ext_resource path="res://data/composite/objects/new_gradient.res" type="Gradient" id=3]
+[ext_resource path="res://data/image/beam_gradient.png" type="Texture" id=4]
+[ext_resource path="res://data/composite/objects/ImpactCrackle.gd" type="Script" id=5]
+[ext_resource path="res://data/composite/objects/weapons/charge_beam/ChargeBeamOrdnance.gd" type="Script" id=8]
+
+[sub_resource type="Curve" id=1]
+max_value = 10.0
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0206612, 9.26229 ), 0.0, 0.0, 0, 0, Vector2( 0.103306, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.132231, 7.37705 ), 0.0, 0.0, 0, 0, Vector2( 0.31405, 3.19672 ), 0.0, 0.0, 0, 0, Vector2( 0.557851, 4.01639 ), 0.0, 0.0, 0, 0, Vector2( 0.644628, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.809917, 2.37705 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.044226, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.0786241, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0982801, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.157248, 0.106557 ), 0.0, 0.0, 0, 0, Vector2( 0.167076, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.255528, 0.180328 ), 0.0, 0.0, 0, 0, Vector2( 0.255528, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.346437, 0.295082 ), 0.0, 0.0, 0, 0, Vector2( 0.358722, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.422604, 0.459016 ), 0.0, 0.0, 0, 0, Vector2( 0.503686, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.58231, 0.590164 ), 0.0, 0.0, 0, 0, Vector2( 0.648649, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.793612, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CanvasItemMaterial" id=3]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id=4]
+
+[sub_resource type="GradientTexture" id=5]
+gradient = ExtResource( 3 )
+width = 32
+
+[sub_resource type="ParticlesMaterial" id=6]
+emission_shape = 1
+emission_sphere_radius = 5.0
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = -6.0
+scale = 0.5
+color_ramp = SubResource( 5 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = ExtResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=8]
+emission_shape = 2
+emission_box_extents = Vector3( 100, 2, 1 )
+flag_align_y = true
+flag_rotate_y = true
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = -0.1
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 2.0
+scale = 0.5
+color_ramp = SubResource( 7 )
+
+[sub_resource type="Gradient" id=9]
+offsets = PoolRealArray( 0, 0.105263, 0.1875, 0.267857, 0.559524, 1 )
+colors = PoolColorArray( 1, 0, 0, 0, 1, 0, 0, 0.25, 1, 0.46875, 0.46875, 1, 1, 0, 0, 0.245421, 1, 0.40625, 0.40625, 0.517647, 1, 0, 0, 0 )
+
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
+
+[sub_resource type="ParticlesMaterial" id=11]
+emission_shape = 2
+emission_box_extents = Vector3( 100, 4, 1 )
+flag_align_y = true
+flag_rotate_y = true
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 0.5
+color_ramp = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+emission_shape = 2
+emission_box_extents = Vector3( 100, 2, 1 )
+flag_align_y = true
+flag_rotate_y = true
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = -0.1
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 2.0
+scale = 0.5
+color_ramp = SubResource( 7 )
+
+[sub_resource type="CanvasItemMaterial" id=13]
+blend_mode = 1
+
+[sub_resource type="ParticlesMaterial" id=14]
+flag_disable_z = true
+spread = 80.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 10.0
+initial_velocity_random = 1.0
+angular_velocity = 180.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 0.1
+scale = 0.5
+scale_random = 0.5
+color = Color( 1, 0.313726, 0.313726, 1 )
+
+[node name="ChargeBeamOrdnance" type="Node2D"]
+script = ExtResource( 8 )
+
+[node name="ChargeTurret" type="Node2D" parent="."]
+script = ExtResource( 1 )
+beam_width_curve = SubResource( 1 )
+residue_curve = SubResource( 2 )
+
+[node name="Turret" type="Node2D" parent="ChargeTurret"]
+
+[node name="RayCast2D" type="RayCast2D" parent="ChargeTurret/Turret"]
+cast_to = Vector2( 100, 0 )
+
+[node name="Beams" type="Node2D" parent="ChargeTurret/Turret"]
+position = Vector2( -11, 0 )
+
+[node name="Beam" type="Line2D" parent="ChargeTurret/Turret/Beams"]
+position = Vector2( 10, 0 )
+points = PoolVector2Array( 7, 0, 16, -3, 23, -1, 29, 3, 36, -1, 40, -1 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 4 )
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 10
+
+[node name="Crackle" type="Line2D" parent="ChargeTurret/Turret/Beams"]
+material = SubResource( 3 )
+position = Vector2( 5, 0 )
+points = PoolVector2Array( 7, 0, 19, -9, 25, 10, 29, 3, 36, -1, 40, -1 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 4 )
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 10
+
+[node name="BeamParticles" type="Node2D" parent="ChargeTurret/Turret"]
+position = Vector2( -11, 0 )
+
+[node name="Charge" type="Particles2D" parent="ChargeTurret/Turret/BeamParticles"]
+material = SubResource( 4 )
+position = Vector2( 11, 0 )
+amount = 20
+visibility_rect = Rect2( -10, -10, 20, 20 )
+process_material = SubResource( 6 )
+
+[node name="Down" type="Particles2D" parent="ChargeTurret/Turret/BeamParticles"]
+position = Vector2( 111, 1 )
+amount = 10
+visibility_rect = Rect2( -100, -2, 200, 4 )
+local_coords = false
+process_material = SubResource( 8 )
+
+[node name="Residue" type="Particles2D" parent="ChargeTurret/Turret/BeamParticles"]
+position = Vector2( 111, 0 )
+amount = 180
+lifetime = 2.0
+visibility_rect = Rect2( -100, -4, 200, 8 )
+local_coords = false
+process_material = SubResource( 11 )
+
+[node name="Up" type="Particles2D" parent="ChargeTurret/Turret/BeamParticles"]
+position = Vector2( 111, -1 )
+amount = 10
+visibility_rect = Rect2( -100, -2, 200, 4 )
+local_coords = false
+process_material = SubResource( 12 )
+
+[node name="Impact" type="Node2D" parent="ChargeTurret"]
+position = Vector2( -24, 0 )
+z_index = 5
+script = ExtResource( 5 )
+
+[node name="Crackle1" type="Line2D" parent="ChargeTurret/Impact"]
+material = SubResource( 3 )
+position = Vector2( 0, 2 )
+rotation = 0.785397
+points = PoolVector2Array( 1, 0, 3, 2, 7, 0 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 4 )
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 10
+
+[node name="Crackle2" type="Line2D" parent="ChargeTurret/Impact"]
+material = SubResource( 3 )
+position = Vector2( 0, -2 )
+rotation = -0.785397
+points = PoolVector2Array( 1, 0, 3, 2, 7, 0 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 4 )
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 10
+
+[node name="Crackle3" type="Line2D" parent="ChargeTurret/Impact"]
+material = SubResource( 3 )
+points = PoolVector2Array( 1, 0, 3, 2, 7, 0 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+texture = ExtResource( 4 )
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 10
+
+[node name="Chunks" type="Particles2D" parent="ChargeTurret/Impact"]
+material = SubResource( 13 )
+amount = 100
+lifetime = 0.75
+visibility_rect = Rect2( -15, -15, 30, 30 )
+local_coords = false
+process_material = SubResource( 14 )

@@ -22,7 +22,7 @@ func get_input():
   var y = Input.get_joy_axis(0, JOY_ANALOG_LY)
 
   var thumb = Vector2(x, y)
-  
+
   if thumb.length() > deadzone:
     target_velocity = Vector2(x, y)
   else:

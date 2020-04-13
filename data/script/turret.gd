@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var turret = $ChargeBeamOrdnance
+
 export (int) var rate_of_fire = 3
 export (float) var deadzone = 0.2
 export (float) var align_speed = 0.9
@@ -13,9 +15,9 @@ var last_global_rotation = 0
 func process_input(delta):
   var x = Input.get_joy_axis(0, JOY_ANALOG_RX)
   var y = Input.get_joy_axis(0, JOY_ANALOG_RY)
-  
+
   var thumb = Vector2(x, y)
-  
+
   if thumb.length() > deadzone:
     direction = Vector2(x, y).normalized()
     thumb_moved = true
@@ -23,7 +25,11 @@ func process_input(delta):
     thumb_moved = false
 
   if Input.get_joy_axis(0, JOY_ANALOG_R2) > 0.1:
-    charged += Input.get_joy_axis(0, JOY_ANALOG_R2) * delta
+    # charged += Input.get_joy_axis(0, JOY_ANALOG_R2) * delta
+
+    turret.hold_trigger()
+  else:
+    turret.release_trigger()
 
   while (charged > 1.0 / rate_of_fire):
     if !$CannonSfx.playing:
@@ -40,6 +46,7 @@ func process_input(delta):
 
 func _process(delta):
   process_input(delta)
+
   if (thumb_moved):
     global_rotation = lerp_angle(global_rotation, direction.angle(), align_speed * delta)
     last_global_rotation = global_rotation

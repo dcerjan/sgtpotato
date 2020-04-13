@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://data/script/turret.gd" type="Script" id=1]
 [ext_resource path="res://data/script/follow_player.gd" type="Script" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://data/sound/Motor_Sound2.wav" type="AudioStream" id=13]
 [ext_resource path="res://data/sound/Cannon.wav" type="AudioStream" id=14]
 [ext_resource path="res://data/scene/root.gd" type="Script" id=15]
+[ext_resource path="res://data/effects/hdr_glow.tscn" type="PackedScene" id=16]
+[ext_resource path="res://data/composite/objects/weapons/charge_beam/ChargeBeamOrdnance.tscn" type="PackedScene" id=17]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.1
@@ -32,6 +34,8 @@ script = ExtResource( 15 )
 
 [node name="follow_player" type="Node2D" parent="."]
 position = Vector2( -15.9525, -0.0446434 )
+z_index = 20
+z_as_relative = false
 script = ExtResource( 2 )
 springiness = 0.5
 
@@ -42,8 +46,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="HDR Glow" parent="follow_player/root_cam" instance=ExtResource( 16 )]
+margin_left = -160.0
+margin_top = -90.0
+margin_right = 160.0
+margin_bottom = 89.0
+
 [node name="gui" type="Node2D" parent="follow_player/root_cam"]
-position = Vector2( -79.0475, -43.9554 )
+position = Vector2( -156.048, -85.9554 )
 z_index = 10
 z_as_relative = false
 
@@ -272,6 +282,9 @@ position = Vector2( -2, 0 )
 script = ExtResource( 1 )
 rate_of_fire = 100
 align_speed = 5.0
+
+[node name="ChargeBeamOrdnance" parent="player/turret" instance=ExtResource( 17 )]
+position = Vector2( 11, 0 )
 
 [node name="Sprite" type="Sprite" parent="player/turret"]
 position = Vector2( 4, 0 )
