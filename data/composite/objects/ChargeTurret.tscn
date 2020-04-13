@@ -4,7 +4,7 @@
 [ext_resource path="res://data/composite/objects/ChargeTurret.gd" type="Script" id=2]
 [ext_resource path="res://data/composite/objects/new_gradient.res" type="Gradient" id=3]
 [ext_resource path="res://data/image/beam_gradient.png" type="Texture" id=4]
-[ext_resource path="res://data/image/wall.png" type="Texture" id=5]
+[ext_resource path="res://data/image/box.png" type="Texture" id=5]
 [ext_resource path="res://data/composite/objects/ImpactCrackle.gd" type="Script" id=6]
 
 [sub_resource type="Curve" id=1]
@@ -15,7 +15,7 @@ _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0206612, 9.26229 ), 0.0, 0
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.044226, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.0786241, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0982801, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.157248, 0.106557 ), 0.0, 0.0, 0, 0, Vector2( 0.167076, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.255528, 0.180328 ), 0.0, 0.0, 0, 0, Vector2( 0.255528, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.346437, 0.295082 ), 0.0, 0.0, 0, 0, Vector2( 0.358722, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.422604, 0.459016 ), 0.0, 0.0, 0, 0, Vector2( 0.503686, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.58231, 0.590164 ), 0.0, 0.0, 0, 0, Vector2( 0.648649, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.793612, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="RectangleShape2D" id=14]
-extents = Vector2( 2, 28 )
+extents = Vector2( 8, 8 )
 
 [sub_resource type="CanvasItemMaterial" id=17]
 blend_mode = 1
@@ -157,17 +157,85 @@ curve = SubResource( 1 )
 after_curve = SubResource( 2 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2( -57, 0 )
+position = Vector2( -56, 24 )
 
 [node name="Sprite" type="Sprite" parent="StaticBody2D"]
+modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
 position = Vector2( 2.02656e-06, 0 )
-scale = Vector2( 0.25, 3.5 )
 texture = ExtResource( 5 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource( 14 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2( -56, -8 )
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D2"]
+modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
+position = Vector2( 2.02656e-06, 0 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource( 14 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2( -56, -24 )
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D3"]
+modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
+position = Vector2( 2.02656e-06, 0 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+shape = SubResource( 14 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2( -40, -24 )
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D4"]
+modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
+position = Vector2( 2.02656e-06, 0 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+shape = SubResource( 14 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2( -40, 24 )
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D5"]
+modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
+position = Vector2( 2.02656e-06, 0 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5"]
 shape = SubResource( 14 )
 __meta__ = {
 "_edit_lock_": true

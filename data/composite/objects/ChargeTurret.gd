@@ -38,6 +38,9 @@ var charge: float = 0.0
 var energy: float = 0.0
 var residue: float = 0.0
 
+var samples = 20.0
+var step = 1.0 / samples
+
 func _ready() -> void:
   # TODO: extract 100 into a range variable
   ray.enabled = false
@@ -120,8 +123,6 @@ func _process(delta):
         ray.enabled = true
         beam.add_point(Vector2(2.0, 0.0))
         beam.add_point(Vector2(100.0, 0.0))
-        var samples = 20.0
-        var step = 1.0 / samples
         for i in range(int(samples)):
           crackle.add_point(Vector2(4.0 + i * step * 80.0, (0.5 - randf()) * 6.0))
 
@@ -130,14 +131,23 @@ func _process(delta):
       beam.width = curve.interpolate(1.0 - energy)
       crackle.width = curve.interpolate(1.0 - energy) * 0.25
       if ray.is_colliding():
-        print(ray.get_collision_point())
         if not impact.playing:
           impact.play()
         impact.global_position = ray.get_collision_point()
         impact.global_rotation = ray.get_collision_normal().angle()
+        var end = beam.get_global_transform().xform_inv(ray.get_collision_point())
+        beam.set_point_position(1, end * 0.93)
+        var end_len = end.length()
+        for i in range(int(samples)):
+          var y = crackle.get_point_position(i).y
+          crackle.set_point_position(i, Vector2(min(4.0 + i * step * 80.0, end_len), y))
       else:
+        beam.set_point_position(1, Vector2(100.0, 0.0))
+        for i in range(int(samples)):
+          var y = crackle.get_point_position(i).y
+          crackle.set_point_position(i, Vector2(4.0 + i * step * 80.0, y))
         impact.stop()
-        
+
       if energy <= 0.0:
         __turret_state = TurretState.Discharging
         impact.stop()
