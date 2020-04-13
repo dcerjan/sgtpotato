@@ -14,6 +14,29 @@ export (int) var particle_rate = 30
 export (Curve) var curve = Curve.new()
 export (Curve) var after_curve = Curve.new()
 
+# = States = #
+class Idle extends State:
+  func on_enter():
+    pass
+
+class Spooling extends State:
+  func on_enter():
+    pass
+
+class Unspooling extends State:
+  func on_enter():
+    pass
+
+class Charged extends State:
+  func on_enter():
+    pass
+
+class Discharging extends State:
+  func on_enter():
+    pass
+
+
+
 var charge: float = 0.0
 var discharge: float = 1.0
 var after: float = 0.0
@@ -55,7 +78,7 @@ func _process(delta):
   if (Input.is_mouse_button_pressed(BUTTON_LEFT) and discharge >= 1.0):
     charge = min(charge + delta, charge_trheshold)
   else:
-    if charge >= 1.0 and discharge <= 0.5 and discharge >= 0.4:
+    if charge >= 1.0 and discharge <= 0.7 and discharge >= 0.6:
       after = 1.0
     if charge >= 1.0 and discharge > 0.0:
       beam.self_modulate = Color(1.0, 1.0, 1.0, 1.0 - discharge)
