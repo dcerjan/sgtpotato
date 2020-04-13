@@ -1,106 +1,155 @@
 extends Node2D
 
 onready var turret = $Turret
-onready var particles = $Turret/Particles2D
+onready var particles_charge = $Turret/BeamParticles/Charge
 onready var particles_beam_up = $Turret/BeamParticles/Up
 onready var particles_beam_down = $Turret/BeamParticles/Down
-onready var particles_beam = $Turret/BeamParticles/Middle
+onready var particles_residue = $Turret/BeamParticles/Residue
+onready var beam = $Turret/Beams/Beam
+onready var crackle = $Turret/Beams/Crackle
 
 onready var bar = $Control/Bg/Fg
-onready var beam = $Turret/Beam
 
 export (float) var charge_trheshold = 1.0
 export (int) var particle_rate = 30
 export (Curve) var curve = Curve.new()
 export (Curve) var after_curve = Curve.new()
 
-# = States = #
-class Idle extends State:
-  func on_enter():
-    pass
+enum TurretState {
+  Idle          = 0,
+  SpoolingUp    = 1,
+  SpoolingDown  = 2,
+  Charged       = 3,
+  Firing        = 4,
+  Discharging   = 5
+}
 
-class Spooling extends State:
-  func on_enter():
-    pass
+enum ResidueState {
+  Stopped = 0,
+  Playing = 1
+}
 
-class Unspooling extends State:
-  func on_enter():
-    pass
-
-class Charged extends State:
-  func on_enter():
-    pass
-
-class Discharging extends State:
-  func on_enter():
-    pass
-
-
+var __turret_state = TurretState.Idle
+var __residue_state = ResidueState.Stopped
 
 var charge: float = 0.0
-var discharge: float = 1.0
-var after: float = 0.0
-var prev_particle_emission: int = -1
-var render_particles = false
+var energy: float = 0.0
+var residue: float = 0.0
+
+func _ready() -> void:
+  beam.clear_points()
+  crackle.clear_points()
+  stop_spool_particles()
+  stop_residue_particles()
+
+func stop_spool_particles() -> void:
+  if particles_beam_down.emitting:
+    particles_beam_down.emitting = false
+  if particles_beam_up.emitting:
+    particles_beam_up.emitting = false
+  if particles_charge.emitting:
+    particles_charge.emitting = false
+
+func play_spool_particles() -> void:
+  if not particles_beam_down.emitting:
+    particles_beam_down.emitting = true
+    particles_beam_down.restart()
+  if not particles_beam_up.emitting:
+    particles_beam_up.emitting = true
+    particles_beam_up.restart()
+  if not particles_charge.emitting:
+    particles_charge.emitting = true
+    particles_charge.restart()
+
+func modulate_spool_particles(alpha: float) -> void:
+  var color = Color(1.0, 1.0, 1.0, clamp(alpha, 0.0, 1.0))
+  particles_charge.self_modulate = color
+  particles_beam_down.self_modulate = color
+  particles_beam_up.self_modulate = color
+
+func stop_residue_particles() -> void:
+  if particles_residue.emitting:
+    particles_residue.emitting = false
+
+func play_residue_particles() -> void:
+  if not particles_residue.emitting:
+    particles_residue.emitting = true
+    particles_residue.restart()
+
+func modulate_residue_particles(alpha: float) -> void:
+  particles_residue.self_modulate = Color(1.0, 1.0, 1.0, clamp(alpha, 0.0, 1.0))
 
 func _process(delta):
   var mouse_pos = get_global_mouse_position()
   var to_mouse = mouse_pos - turret.global_position
   turret.global_rotation = to_mouse.angle()
   
-  if charge <= 0.0:
-    if particles_beam_down.emitting:
-      particles_beam_down.emitting = false
-    if particles_beam_up.emitting:
-      particles_beam_up.emitting = false
-    if particles.emitting:
-      particles.emitting = false
-
-
-  else:
-    if not particles_beam_down.emitting:
-      particles_beam_down.emitting = true
-      particles_beam_down.restart()
-    if not particles_beam_up.emitting:
-      particles_beam_up.emitting = true
-      particles_beam_up.restart()
-    if not particles.emitting:
-      particles.emitting = true
-      particles.restart()
-    
-  after = max(after - delta * 0.85, 0.0)
-  if particles_beam.emitting and after <= 0.0:
-    particles_beam.emitting = false
-  elif not particles_beam.emitting:
-    particles_beam.emitting = true
-    particles_beam.restart()
-
-  if (Input.is_mouse_button_pressed(BUTTON_LEFT) and discharge >= 1.0):
-    charge = min(charge + delta, charge_trheshold)
-  else:
-    if charge >= 1.0 and discharge <= 0.7 and discharge >= 0.6:
-      after = 1.0
-    if charge >= 1.0 and discharge > 0.0:
-      beam.self_modulate = Color(1.0, 1.0, 1.0, 1.0 - discharge)
-      if charge >= 1.0 and discharge >= 1.0:
-        beam.self_modulate = Color(1.0, 1.0, 1.0, 1.0)
-        for i in range(20):
-          beam.add_point(Vector2(1 + i * 6.0, (randf() - 0.5) * 4.0 * 0.0))
+  match __turret_state:
+    TurretState.Idle:
+      if Input.is_mouse_button_pressed(BUTTON_LEFT):
+        __turret_state = TurretState.SpoolingUp
+        play_spool_particles()
+        
+    TurretState.SpoolingUp:
+      if Input.is_mouse_button_pressed(BUTTON_LEFT):
+        charge = min(charge + delta, 1.0)
+        if charge >= 1.0:
+          __turret_state = TurretState.Charged
       else:
-        var t = 1.0 if discharge > 0.2 && false else pow(discharge / 0.2, 0.7)
-        beam.width = t * 3
-      discharge = max(discharge - delta * 0.75, 0.0)
-    else:
-      beam.clear_points()
-      charge = max(charge - delta * 4, 0.0)
+        __turret_state = TurretState.SpoolingDown
+        
+    TurretState.SpoolingDown:
+      if Input.is_mouse_button_pressed(BUTTON_LEFT):
+        __turret_state = TurretState.SpoolingUp
+      else:
+        charge = max(charge - delta, 0.0)
+        if charge <= 0.0:
+          __turret_state = TurretState.Idle
+          stop_spool_particles()
+          
+    TurretState.Charged:
+      if not Input.is_mouse_button_pressed(BUTTON_LEFT):
+        energy = 1.0
+        __turret_state = TurretState.Firing
+        beam.add_point(Vector2(2.0, 0.0))
+        beam.add_point(Vector2(100.0, 0.0))
+        var samples = 20.0
+        var step = 1.0 / samples
+        for i in range(int(samples)):
+          print(4.0 + step * 80.0)
+          crackle.add_point(Vector2(4.0 + i * step * 80.0, (0.5 - randf()) * 6.0))
+
+    TurretState.Firing:
+      energy = max(energy - delta, 0.0)
+      beam.width = curve.interpolate(1.0 - energy)
+      crackle.width = curve.interpolate(1.0 - energy) * 0.25
+      if energy <= 0.0:
+        __turret_state = TurretState.Discharging
+        beam.clear_points()
+        crackle.clear_points()
+      if __residue_state == ResidueState.Stopped and energy <= 0.75:
+        residue = 1.0
+        __residue_state = ResidueState.Playing
+        play_residue_particles()
+
+    TurretState.Discharging:
+      charge = max(charge - delta * 4.0, 0.0)
       if charge <= 0.0:
-        discharge = 1.0
+        __turret_state = TurretState.Idle
+        stop_spool_particles()
+
+  match __residue_state:
+    ResidueState.Playing:
+      residue = max(residue - delta * 0.85, 0.0)
+      modulate_residue_particles(after_curve.interpolate(1.0 - residue))
+      if residue <= 0.0:
+        __residue_state = ResidueState.Stopped
+        stop_residue_particles()
+    
+    ResidueState.Stopped:
+      pass
   
-  particles.self_modulate = Color(1.0, 1.0, 1.0, clamp(discharge * charge / charge_trheshold, 0.0, 1.0))
-  particles_beam_down.self_modulate = Color(1.0, 1.0, 1.0, clamp(discharge * charge / charge_trheshold, 0.0, 1.0))
-  particles_beam_up.self_modulate = Color(1.0, 1.0, 1.0, clamp(discharge * charge / charge_trheshold, 0.0, 1.0))
-  particles_beam.self_modulate = Color(1.0, 1.0, 1.0, after_curve.interpolate(1.0 - after))
-  
-  beam.width = curve.interpolate(1.0 - discharge)
+  if __turret_state != TurretState.Idle:
+    modulate_spool_particles(charge / charge_trheshold)
   
   bar.rect_scale = Vector2(clamp(charge / charge_trheshold, 0.0, 1.0), 1.0)
