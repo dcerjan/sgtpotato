@@ -10,8 +10,6 @@ onready var crackle = $Turret/Beams/Crackle
 onready var ray = $Turret/RayCast2D
 onready var impact = $Impact
 
-onready var bar = $Control/Bg/Fg
-
 export (Curve) var beam_width_curve = Curve.new()
 export (Curve) var residue_curve = Curve.new()
 
@@ -122,7 +120,7 @@ func _process(delta):
         beam.add_point(Vector2(2.0, 0.0))
         beam.add_point(Vector2(beam_length, 0.0))
         for i in range(int(samples)):
-          crackle.add_point(Vector2(4.0 + i * step * beam_length * 0.8, (0.5 - randf()) * 6.0))
+          crackle.add_point(Vector2(4.0 + i * step * (beam_length - 4.0), (0.5 - randf()) * 6.0))
 
     TurretState.Firing:
       energy = max(energy - delta * 0.75, 0.0)
@@ -134,11 +132,11 @@ func _process(delta):
         impact.global_position = ray.get_collision_point()
         impact.global_rotation = ray.get_collision_normal().angle()
         var end = beam.get_global_transform().xform_inv(ray.get_collision_point())
-        beam.set_point_position(1, end * 0.93)
+        beam.set_point_position(1, end - end.normalized() * 4.0)
         var end_len = end.length()
         for i in range(int(samples)):
           var y = crackle.get_point_position(i).y
-          crackle.set_point_position(i, Vector2(min(4.0 + i * step * beam_length * 0.8, end_len), y))
+          crackle.set_point_position(i, Vector2(min(4.0 + i * step * (beam_length - 4.0), end_len), y))
         var body = ray.get_collider() as Node2D
         if body.has_node('HealthAspect'):
           var health_aspect: HealthAspect = body.get_node('HealthAspect')
@@ -147,7 +145,7 @@ func _process(delta):
         beam.set_point_position(1, Vector2(beam_length, 0.0))
         for i in range(int(samples)):
           var y = crackle.get_point_position(i).y
-          crackle.set_point_position(i, Vector2(4.0 + i * step * beam_length * 0.8, y))
+          crackle.set_point_position(i, Vector2(4.0 + i * step * (beam_length - 4.0), y))
         impact.stop()
 
       if energy <= 0.0:
@@ -180,8 +178,6 @@ func _process(delta):
 
   if __turret_state != TurretState.Idle:
     modulate_spool_particles(charge)
-
-  # bar.rect_scale = Vector2(clamp(charge, 0.0, 1.0), 1.0)
 
 func hold_trigger() -> void:
   trigger_held = true

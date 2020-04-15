@@ -18,15 +18,22 @@ func get_input():
     target_velocity = Vector2.ZERO
     return
 
-  var x = Input.get_joy_axis(0, JOY_ANALOG_LX)
-  var y = Input.get_joy_axis(0, JOY_ANALOG_LY)
+#  var x = Input.get_joy_axis(0, JOY_ANALOG_LX)
+#  var y = Input.get_joy_axis(0, JOY_ANALOG_LY)
+#  var thumb = Vector2(x, y)
 
-  var thumb = Vector2(x, y)
+  var x = 0.0
+  var y = 0.0
+  x += -1.0 if Input.is_key_pressed(KEY_A) else 0.0
+  x +=  1.0 if Input.is_key_pressed(KEY_D) else 0.0
+  y += -1.0 if Input.is_key_pressed(KEY_W) else 0.0
+  y +=  1.0 if Input.is_key_pressed(KEY_S) else 0.0
 
-  if thumb.length() > deadzone:
-    target_velocity = Vector2(x, y)
-  else:
-    target_velocity = Vector2.ZERO
+  target_velocity = Vector2(x, y)
+#  if thumb.length() > deadzone:
+#    target_velocity = Vector2(x, y)
+#  else:
+#    target_velocity = Vector2.ZERO
 
 func play_motor(velocity):
   var vol = clamp(velocity.length(), 1.0, 3.0) / 3.0

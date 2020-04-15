@@ -182,7 +182,7 @@ local_coords = false
 process_material = SubResource( 12 )
 
 [node name="Impact" type="Node2D" parent="ChargeTurret"]
-position = Vector2( -24, 0 )
+position = Vector2( -29, 0 )
 z_index = 5
 script = ExtResource( 5 )
 

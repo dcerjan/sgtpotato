@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://data/script/turret.gd" type="Script" id=1]
 [ext_resource path="res://data/script/follow_player.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://data/scene/root.gd" type="Script" id=15]
 [ext_resource path="res://data/effects/hdr_glow.tscn" type="PackedScene" id=16]
 [ext_resource path="res://data/composite/objects/weapons/charge_beam/ChargeBeamOrdnance.tscn" type="PackedScene" id=17]
+[ext_resource path="res://data/image/crosshair.png" type="Texture" id=18]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.1
@@ -47,10 +48,10 @@ __meta__ = {
 }
 
 [node name="HDR Glow" parent="follow_player/root_cam" instance=ExtResource( 16 )]
-margin_left = -160.0
-margin_top = -90.0
-margin_right = 160.0
-margin_bottom = 89.0
+margin_left = -160.047
+margin_top = -89.9554
+margin_right = 159.953
+margin_bottom = 89.0446
 
 [node name="gui" type="Node2D" parent="follow_player/root_cam"]
 position = Vector2( -156.048, -85.9554 )
@@ -251,6 +252,12 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Crosshair" type="Sprite" parent="."]
+position = Vector2( 5, -27 )
+z_index = 6
+texture = ExtResource( 18 )
+offset = Vector2( 0.5, 0.5 )
+
 [node name="player" type="RigidBody2D" parent="."]
 z_index = 1
 mass = 10.0
@@ -281,7 +288,7 @@ bus = "Player"
 position = Vector2( -2, 0 )
 script = ExtResource( 1 )
 rate_of_fire = 100
-align_speed = 5.0
+align_speed = 10.0
 
 [node name="ChargeBeamOrdnance" parent="player/turret" instance=ExtResource( 17 )]
 position = Vector2( 11, 0 )
